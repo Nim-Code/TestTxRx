@@ -1,7 +1,6 @@
 /* To run this program, change the executeable file as:
    # chown root testTx
    # chmod 4455
-   TT 5-3-96.
    */
 
 #include        "includes.h"
