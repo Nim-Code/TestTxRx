@@ -1,0 +1,64 @@
+########################################################################
+# JOTS Subscriber makefile
+########################################################################
+#
+#     make          --> produces the non-optimised version with diagnostics
+#     make debug    --> produces the non-optimised version with debugging and
+#                       diagnostics
+#     make clean    --> deletes all object and backup files
+#     make distr    --> recreates the distribution file
+#
+
+# Name of the executable
+ICMPRECV = icmpRecv 
+TXPROJ = testTx 
+RXPROJ = testRx 
+
+ICMPOBJ = icmpRecv.o
+TXOBJS = multTx.o 
+RXOBJS = multRx.o 
+
+SRCDIR= $(PWD)
+
+# Insert the name of the ANSI compiler
+CC = gcc
+AS = as
+LD = ld
+
+CFLAGS_G = -ansi -DDEBUGGING -DLINUX 
+CFLAGS_R = -I$(SRCDIR)
+
+#LFLAGS_G = -lsocket -lnsl -R/usr/ucblib -L/usr/ucblib -lucb
+LFLAGS_G = -lnsl -L/usr/ucblib
+LFLAGS_R = 
+
+CFLAGS	=$(CFLAGS_R) $(CFLAGS_G)
+
+LFLAGS	=$(LFLAGS_G) $(LFLAGS_R)
+
+OBJS_EXT =
+
+LIBS_EXT = 
+
+all : $(TXPROJ) $(RXPROJ)
+
+$(ICMPRECV): $(ICMPOBJ) $(LIBS_EXT)
+	$(CC) $(LFLAGS) -o $(ICMPRECV) $(ICMPOBJ) $(OBJS_EXT) $(LIBS_EXT)
+$(TXPROJ): $(TXOBJS) $(LIBS_EXT)
+	$(CC) $(LFLAGS) -o $(TXPROJ) $(TXOBJS) $(OBJS_EXT) $(LIBS_EXT)
+$(RXPROJ): $(RXOBJS) $(LIBS_EXT)
+	$(CC) $(LFLAGS) -o $(RXPROJ) $(RXOBJS) $(OBJS_EXT) $(LIBS_EXT)
+
+$(TXOBJS) : $(INCS)
+$(RXOBJS) : $(INCS)
+
+
+debug :
+	make CC=$(CC) CFLAGS_G=' -g -DDEBUGGING' L_FLAGS_G=' -g'
+
+clean :
+	/bin/rm -f *% *.o *~ core *.a
+
+distr :
+	make clean
+	cd .. ; tar -cvf testDriver.tar ./testDriver1.0 ; gzip testDriver.tar
