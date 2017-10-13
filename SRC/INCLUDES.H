@@ -9,18 +9,19 @@
 #else
 #include <sys/param.h>
 #include <sys/time.h>
-#include <sys/socket.h>
-#include <linux/in.h>
-#include <linux/ip.h>
+//#include <linux/in.h>
+//#include <linux/ip.h>
 #ifndef LINUX
-#include <arpa/inet.h>
+//#include <arpa/inet.h>
 #endif
+#include <sys/socket.h>
 #include <sys/uio.h>
 #include <linux/types.h>
 #include <net/if.h>
-/* #include <netinet/ip.h> */
-/* #include <netinet/in.h> */
+#include <netinet/ip.h> 
+#include <netinet/in.h> 
 #include <errno.h>
+#include <unistd.h>
 #endif
 #ifndef IPPROTO_IPV6
 #endif

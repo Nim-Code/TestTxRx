@@ -10,7 +10,7 @@ struct sockaddr_in      serv_addr;
 
 struct hostent *gethostbyname();
 
-main(argc, argv)
+int main(argc, argv)
     int argc;
     char **argv;
     {
@@ -34,7 +34,7 @@ main(argc, argv)
         if(argc < 6)
         {
         printf(" USAGE: testTx  priority  msgSize(bytes)  interval(msec)  variableRate IPAddr.\n");
-        exit(1);
+        //exit(1);
         }
         priority =  atoi(&argv[1][0]);
         msgSize  =  atoi(&argv[2][0]);
@@ -50,11 +50,11 @@ main(argc, argv)
 	printf("IS IT CORRECT?(Y/N)\n");
 	c = getchar();
 	if( c != 0x59 && c != 0x79 )
-		return;
+		//return;
     if( (icmpfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0)
                         {
                         perror("icmp socket");
-                        exit(1);
+                        //exit(1);
                         }
         fcntl(icmpfd,F_SETFL,O_NONBLOCK);
 
@@ -102,7 +102,7 @@ tryAgain:
 		 if(sendto (fd, (char *)&testdata, msgSize, 0, (struct sockaddr *)&addr, sizeof (addr)) < 0 )
 		  {
 		  printf("sendto ERROR.\n");
-		  exit(1);
+		  //exit(1);
 		  }
 		  printf("SENDING: MsgSize = %d Bytes. INTERVAL = %d msec. PRI=%d. MsgNumber = %d\n",msgSize,delay,priority,msgNumber);
                         msgNumber++;
