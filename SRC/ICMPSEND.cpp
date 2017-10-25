@@ -237,8 +237,10 @@ void pr_pack(char *buf,int cc,struct	sockaddr_in *from)
 	icp = (struct icmp *)(buf + hlen);
 	if (icp->icmp_type != ICMP_ECHOREPLY) {
 		if (verbose) {
-//	printf("%d bytes from %s: ", cc,
-//		inet_ntoa(from->sin_addr.s_addr);
+		int let= 20;
+		char adr[let];
+		inet_ntop(AF_INET,&(from->sin_addr.s_addr) ,adr,let);
+		printf("%d bytes from %s: ", cc, adr);
 			printf("icmp_type=%d (%s)\n",
 				icp->icmp_type, pr_type(icp->icmp_type));
 			for (i=0; i<12; i++) 
@@ -252,8 +254,10 @@ void pr_pack(char *buf,int cc,struct	sockaddr_in *from)
 		return;
 
 	tp = (struct timeval *)&icp->icmp_data[0];
-//      printf("%d bytes from %s: ", cc,
-//      inet_ntoa(ntohl(from->sin_addr.s_addr)));
+	int let= 20;
+	char adr[let];
+	inet_ntop(AF_INET,&(from->sin_addr.s_addr) ,adr,let);
+	printf("%d bytes from %s: ", cc, adr);
 	printf("icmp_seq=%d.  ", icp->icmp_seq);
 	if (timing) {
 		tvsub(&tv, tp);

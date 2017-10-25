@@ -1,5 +1,6 @@
 #include <netinet/ip_icmp.h>
 #include <stdio.h>
+#include "icmpRecv.h"
 /*
     Successful Compilation 
 */
@@ -42,7 +43,3 @@ int icmpRecv(int icmpfd)
 		return(1);
 }
 
-int main()
-{
-	return 0;
-}
